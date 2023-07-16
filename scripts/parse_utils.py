@@ -4,6 +4,18 @@ import time
 
 import openai
 import tiktoken
+from bs4 import BeautifulSoup
+
+import requests
+from models import Post, Link
+
+
+def get_full_text(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
+    # Assuming that the blog post text is within <p> tags
+    text = " ".join([p.text for p in soup.find_all("p")])
+    return text
 
 
 def num_tokens_from_messages(messages, model="gpt-3.5-turbo-0613"):
@@ -49,7 +61,7 @@ def num_tokens_from_messages(messages, model="gpt-3.5-turbo-0613"):
     return num_tokens
 
 
-def get_summary(title, description, model="gpt-3.5-turbo-16k-0613"):
+def get_summary(title, description, model="gpt-3.5-turbo"):
     # Set maximum number of tokens
     max_tokens = 4096
 
@@ -101,7 +113,7 @@ def get_summary(title, description, model="gpt-3.5-turbo-16k-0613"):
     try:
         # The response from the model is a JSON string. Parse it to get the actual summary.
         summary = json.loads(summary_json)["summary"]
-        print(f"Got summary for {title}: {summary}")
+        # print(f"Got summary for {title}: {summary}")
     except json.JSONDecodeError:
         print(f"Could not generate summary for {title}")
         summary = "No summary generated due to decoding error"

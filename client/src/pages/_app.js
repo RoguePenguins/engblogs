@@ -30,26 +30,7 @@ export default function App({ Component, pageProps }) {
         <title>engblogs</title>
         <link rel="icon" href="/static/favicon.png" />
       </Head>
-
-      {/* Global Site Tag (gtag.js) - Google Analytics */}
-      <Script
-        strategy="afterInteractive"
-        src={"https://www.googletagmanager.com/gtag/js?id=G-V596PGDDBE"}
-      />
-      <Script
-        id="gtag-init"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-V596PGDDBE', {
-                page_path: window.location.pathname,
-              });
-            `,
-        }}
-      />
+ 
     </>
   );
 }
